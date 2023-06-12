@@ -20,6 +20,37 @@
     <input type="text" placeholder="Cor de Background">
 
     <script>
-        // ...
+        // mostra dentro da div onde o mouse esta.
+       function mostrarPosicaoMouse(e) {
+        $('#posicao').html(`x: ${e.clientX} y: ${e.clientY}`)
+       }
+       $('body').on('mousemove', mostrarPosicaoMouse)
+
+       // quando o mouse entrar na div o evento para de registrar.
+       $('#posicao').mouseover(e => {
+        $('body').off('mousemove',mostrarPosicaoMouse)
+       })
+
+        //  quando o mouser sair da div ele volta a registrar os eventos.
+       $('#posicao').mouseleave(e => {
+        $('body').on('mousemove', mostrarPosicaoMouse)
+       })
+        //  contabiliza os clicks e mostra na div.
+        let cliques = 0
+        $('body').click(e => {
+            $('#cliques').html(`Cliques: ${++cliques}`)
+        })
+
+        const backgroundOriginal = $('body').css('background-color')
+
+        $('input').keyup(function(e) {
+            const valor = $(this).val()
+            if(valor.match(/#[\da-fA-F]{3,6}/)) {
+                $('body').css('background-color', valor)
+            }else {
+                $('body').css('background-color', backgroundOriginal)
+
+            }
+        })
     </script>
 </body>
